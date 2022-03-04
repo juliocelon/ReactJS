@@ -3,8 +3,14 @@ import'./ToDoButton.css'
 
 function ToDoButton()
 {
+    const onClickButton = () => {
+        alert('Modal');
+    }; 
+
     return(
-        <button className="MyButton">+</button>
+        <button className="MyButton" onClick = { () => onClickButton() } >
+            +
+        </button>
     );
 }
 
