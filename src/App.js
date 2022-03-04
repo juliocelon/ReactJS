@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { ToDoCounter } from './ToDoCounter';
 import { ToDoSearch } from './ToDoSearch';
@@ -16,16 +15,15 @@ function App() {
 
   // It´s an state
   const [searchValue, setSearchValue] = React.useState('');
-
+  // It´s an state
   const [tasks, setTasks ] = React.useState(toDoLists);
 
   const completedTasks = tasks.filter(task => !!task.completed ).length;
-  // const completedTasks = tasks.filter(taks => task.completed == true);
+  // const completedTasks = tasks.filter(taks => task.completed == true); // the same as previous line
 
   const totalTasks = tasks.length;
 
   let searchedTasks = [];
-
   if(!searchValue >= 1)
   {
     searchedTasks = tasks;
@@ -39,7 +37,6 @@ function App() {
     })
   }
   
-
   return (
     <React.Fragment >
 
@@ -57,10 +54,10 @@ function App() {
       </ToDoSearch> 
 
       <ToDoList> 
-        {searchedTasks.map( todo => (<ToDoItem 
-        key={todo.text} 
-        text={todo.text} 
-        completed={todo.completed}
+        {searchedTasks.map( task => (<ToDoItem 
+        key={task.text} 
+        text={task.text} 
+        completed={task.completed}
         />))}
       </ToDoList> 
 

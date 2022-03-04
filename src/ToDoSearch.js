@@ -20,7 +20,7 @@ function ToDoSearch({searchValue, setSearchValue}) {
       />
     );
 
-    // Here I return an array with n internal elements, not returno just one element
+    // In this case, I return an array with n internal elements, not return just one element, just to show how to write on <p>
     // return [
     //   <input 
     //     className="TodoSearch" 
