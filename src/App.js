@@ -5,38 +5,48 @@ import { ToDoList } from './ToDoList';
 import { ToDoItem } from './ToDoItem';
 import { ToDoButton } from './ToDoButton';
 
-const toDoLists = [
-  {text:'running', completed:true},
-  {text:'studying', completed:true},
-  {text:'eating', completed:false}
+const defaultTasks = [
+  {text:'Running', completed:true},
+  {text:'Studying', completed:true},
+  {text:'Eating', completed:false},
+  { text: 'Working on project', completed: false },
 ];
 
 function App() {
-
-  // It´s an state
   const [searchValue, setSearchValue] = React.useState('');
-  // It´s an state
-  const [tasks, setTasks ] = React.useState(toDoLists);
+  const [tasks, setTasks ] = React.useState(defaultTasks);
 
   const completedTasks = tasks.filter(task => !!task.completed ).length;
-  // const completedTasks = tasks.filter(taks => task.completed == true); // the same as previous line
-
   const totalTasks = tasks.length;
 
   let searchedTasks = [];
-  if(!searchValue >= 1)
-  {
+
+  if(searchValue < 1) {
     searchedTasks = tasks;
-  }
-  else
-  {
+  }else{
     searchedTasks = tasks.filter(task => {
-      const taskText = task.text.toLowerCase();
-      const searchText = searchValue.toLowerCase();
-      return taskText.includes(searchText);
-    })
+    const taskText = task.text.toLowerCase();
+    const searchText = searchValue.toLowerCase();
+    return taskText.includes(searchText);
+    });
   }
-  
+
+  const completeTask = (text) => {
+    const taskIndex = tasks.findIndex( task => task.text === text);
+    const newTasks = [...tasks];
+    newTasks[taskIndex].completed = true;
+    setTasks(newTasks); //rerender because the state has changed
+  }
+
+  const deleteTask = (text) => {
+    console.log("deleteTask: "+ text);
+    // Get the index of the element on the To Do List that has the same text as the text received
+    const taskIndex = tasks.findIndex( task => task.text === text);
+    const newTasks = [...tasks]; // Create a list of new tasks using spread operator (...)
+    newTasks.splice(taskIndex , 1);
+    setTasks(newTasks); //rerender because the state has changed
+  }
+
   return (
     <React.Fragment >
 
@@ -44,25 +54,26 @@ function App() {
         total = {totalTasks}
         completed = {completedTasks}
       />
-      
-      {/* Sending properties inside two tags (in this case: 'input'), to get this, you should use props.children  */}
+
       <ToDoSearch
         searchValue = {searchValue}
         setSearchValue = {setSearchValue}
-      >  
-        <input placeholder="to do" />
-      </ToDoSearch> 
+      />
 
       <ToDoList> 
-        {searchedTasks.map( task => (<ToDoItem 
-        key={task.text} 
-        text={task.text} 
-        completed={task.completed}
-        />))}
+        {searchedTasks.map( task => (
+          <ToDoItem 
+            key={task.text} 
+            text={task.text} 
+            completed={task.completed} //To sent the status of completed or not completed of the task
+            onComplete={()=>completeTask(task.text)}
+            onDelete={()=>deleteTask(task.text)}
+          />
+        ))}
       </ToDoList> 
 
       <ToDoButton/> 
-      
+
     </React.Fragment>
   );
 }

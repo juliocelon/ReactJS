@@ -6,7 +6,7 @@ function ToDoCounter({total, completed})
     return(
         <React.Fragment>
             <div className="ToDoCounter">
-                <h2>You have made {completed} of {total} To Do </h2>
+                <h2>You have made {completed} of {total} Tasks </h2>
             </div>
         </React.Fragment>
     );
